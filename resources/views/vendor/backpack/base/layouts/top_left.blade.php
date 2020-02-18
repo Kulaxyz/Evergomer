@@ -22,13 +22,13 @@
        @yield('header')
 
         <div class="container-fluid animated fadeIn">
-          
+
           @if (isset($widgets['before_content']))
             @include(backpack_view('inc.widgets'), [ 'widgets' => $widgets['before_content'] ])
           @endif
-          
+
           @yield('content')
-          
+
           @if (isset($widgets['after_content']))
             @include(backpack_view('inc.widgets'), [ 'widgets' => $widgets['after_content'] ])
           @endif
@@ -47,6 +47,33 @@
   @stack('before_scripts')
 
   @include(backpack_view('inc.scripts'))
+
+  @if(session()->has('success_message'))
+  <script>
+      $(document).ready(function () {
+          swal({
+              title: "Success!",
+              text: '{{ session()->get('success_message') }}',
+              icon: "success",
+              timer: 4000,
+              buttons: false,
+          });
+      });
+  </script>
+  @endif
+  @if(session()->has('error_message'))
+      <script>
+          $(document).ready(function () {
+              swal({
+                  title: "Error!",
+                  text: '{{ session()->get('error_message') }}',
+                  icon: "error",
+                  timer: 4000,
+                  buttons: false,
+              });
+          });
+      </script>
+  @endif
 
   @yield('after_scripts')
   @stack('after_scripts')

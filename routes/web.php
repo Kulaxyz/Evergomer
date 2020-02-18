@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-Route::get('inv', 'Api\InvoiceController@create');
+
 
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
@@ -32,7 +32,10 @@ Route::group([
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('backpack.auth.password.reset.token');
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('backpack.auth.password.email');
     Route::get('wallet', 'WalletController@index');
-    Route::get('pay_invoice/{id}', 'WalletController@payInvoice')->name('invoice.pay');
+    Route::post('pay_invoice/{invoice}', 'WalletController@payInvoice')->name('invoice.pay');
+    Route::post('payment_status', 'WalletController@paymentStatus')->name('payment.status');
+    Route::get('pay/{invoice}', 'WalletController@pay')->name('pay');
+    Route::get('walletDeposit', 'WalletController@walletDeposit')->name('walletDeposit');
 }); // this should be the absolute last line of this file
 
 

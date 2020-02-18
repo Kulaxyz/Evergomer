@@ -6,9 +6,10 @@ use App\Device;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InvoiceRequest;
 use App\Invoice;
+use App\User;
 use Backpack\Settings\app\Models\Setting;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class InvoiceController extends Controller
 {
@@ -28,22 +29,30 @@ class InvoiceController extends Controller
      * @param InvoiceRequest $request
      * @return Response
      */
-    public function create(InvoiceRequest $request)
+    public function create(InvoiceRequest $request) : JsonResponse
     {
-//        $device = Device::all();
         $data = $request->toArray();
-        if (!isset($data['secret'])) {
-            abort(403);
-        }
-        if ($data['secret'] != Setting::get('api_secret')) {
-            abort(403);
-        }
-
         $device = Device::where('serial_number', $data['device_serial'])->first();
-        $request->merge(['amount' => Invoice::countAmount($device, $data)]);
-        $invoice = Invoice::create($request->all());
+        $amount = Invoice::countAmount($device, $data);
+        $user = User::where('rfid', $data['user_rfid'])->first();
 
-        return response()->json($invoice);
+        if ($user->balance < $amount) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not enough money on wallet! Required:' . $amount . '$',
+            ], 200);
+        }
+        $user->balance -= $amount;
+        $user->save();
+
+        $request->merge(['amount' => $amount]);
+        $invoice = Invoice::create($request->all());
+        $invoice->make_paid();
+
+        return response()->json([
+            'success' => true,
+            'invoice' => $invoice,
+        ], 200);
     }
 
     /**

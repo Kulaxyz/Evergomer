@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->hasMany(Invoice::class, 'rfid', 'user_rfid');
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function devicesList()
     {
         return view('vendor.backpack.additional.devicesList', ['devices' => $this->stations]);
