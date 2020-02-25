@@ -7,7 +7,7 @@
             <h3 class="text-center mb-4">{{ trans('backpack::base.reset_password') }}</h3>
             <div class="nav-steps-wrapper">
                 <ul class="nav nav-tabs">
-                  <li class="nav-item active"><a class="nav-link active" href="#tab_1" data-toggle="tab"><strong>{{ trans('backpack::base.step') }} 1.</strong> {{ trans('backpack::base.confirm_email') }}</a></li>
+                  <li class="nav-item active"><a class="nav-link active" href="#tab_1" data-toggle="tab"><strong>{{ trans('backpack::base.step') }} 1.</strong> Confirm Phone</a></li>
                   <li class="nav-item"><a class="nav-link disabled text-muted"><strong>{{ trans('backpack::base.step') }} 2.</strong> {{ trans('backpack::base.choose_new_password') }}</a></li>
                 </ul>
             </div>
@@ -19,18 +19,18 @@
                             {{ session('status') }}
                         </div>
                     @else
-                    <form class="col-md-12 p-t-10" role="form" method="POST" action="{{ route('backpack.auth.password.email') }}">
+                    <form class="col-md-12 p-t-10" role="form" method="POST" action="{{ route('backpack.auth.password.phone') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group">
-                            <label class="control-label" for="email">{{ trans('backpack::base.email_address') }}</label>
+                            <label class="control-label" for="phone">Phone Number (starting with +)</label>
 
                             <div>
-                                <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" value="{{ old('email') }}">
+                                <input type="number" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" id="phone" value="{{ old('phone') }}">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('phone'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <div>
                                 <button type="submit" class="btn btn-block btn-primary">
-                                    {{ trans('backpack::base.send_reset_link') }}
+                                    Send Password Reset SMS-Code
                                 </button>
                             </div>
                         </div>

@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Interfaces\MustVerifyPhoneNumber;
 use App\Models\BackpackUser;
 use App\Traits\SavesImages;
+use Backpack\Settings\app\Models\Setting;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Backpack\CRUD\app\Models\Traits\CrudTrait; // <------------------------------- this one
@@ -15,9 +17,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use CrudTrait; // <----- this
+    use \App\Traits\MustVerifyPhoneNumber;
+    use CrudTrait;
     use SavesImages;
-    use HasRoles; // <------ and this
+    use HasRoles;
     use Notifiable;
 
      protected $guard_name = 'backpack';
@@ -97,6 +100,11 @@ class User extends Authenticatable
            return '/storage/images/avatars/owner.png';
         }
         return '/storage/images/avatars/default.jpg';
+    }
+
+    public function routeNotificationForMsg91($notification)
+    {
+        return ltrim($this->phone);
     }
 
 }

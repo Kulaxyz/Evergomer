@@ -19,19 +19,27 @@
                         </div>
                     @endif
                     <form class="col-md-12 p-t-10" role="form" method="POST" action="{{ route('backpack.auth.password.reset') }}">
-                        {!! csrf_field() !!}
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
+                        @csrf
                         <div class="form-group">
-                            <label class="control-label" for="email">{{ trans('backpack::base.email_address') }}</label>
+                            <label class="control-label" for="phone">Phone Number (starting with +)</label>
 
                             <div>
-                                <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" value="{{ $email ?? old('email') }}">
+                                <input type="number" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" id="phone" value="{{ old('phone') }}">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('phone'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="code">Code from SMS</label>
+                            <div>
+                                <input type="number" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" name="code" id="code" value="{{ old('code') }}">
+                                @if ($errors->has('code'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('code') }}</strong>
                                     </span>
                                 @endif
                             </div>
