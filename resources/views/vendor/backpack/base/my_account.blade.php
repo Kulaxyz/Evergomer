@@ -208,32 +208,20 @@
         });
     </script>
     <script>
-        let sendPost = (val) => {
-            $.post({
-                url: '{{ route('verify.otp') }}',
-                data: {code: val},
-            }).done((response) => {
-                $('#phone_verification').remove();
-                swal("Success!", response.message, "success");
-            }).fail((errors) => {
-                let res = errors.responseJSON;
-                $('#verification_error').text(res.message+' Please, try again.');
-            });
-        };
         let sendCode = () => {
             $.get("{{ route('send.verification.code') }}").then((response) => {
                 console.log('yes');
             });
             let inner = document.createElement('div');
-            let inp = document.createElement("input");
             let err = document.createElement('p');
+            let inp = document.createElement("input");
             err.setAttribute('id', 'verification_error');
             err.setAttribute('style', 'color: red');
             inp.setAttribute('placeholder', 'ex: 1234');
             inp.setAttribute('type', 'number');
             inp.setAttribute('class', 'swal-content__input');
-            inner.appendChild(inp);
             inner.appendChild(err);
+            inner.appendChild(inp);
             swal({
                 closeOnClickOutside: false,
                 buttons: {
@@ -245,13 +233,25 @@
                     cancel: true,
                 },
                 text: 'Please enter the code from SMS:',
-                content: inner,
+                content: {
+                    element: "input",
+                    attributes: {
+                        placeholder: "ex. 1234",
+                        type: "number",
+                    },
+                }
             }).then((val) => {
                 if (val) {
-                    sendPost(val, this);
+                    $.post({
+                        url: '{{ route('verify.otp') }}',
+                        data: {code: val},
+                    }).done((response) => {
+                        swal("Success!", "Your phone number is verified.", "success");
+                    }).fail((errors) => {
+                        let res = errors.responseJSON;
+                        swal('Something went wrong...', res.message+' Please, try again!', 'error');
+                    });
                 }
-            }).then((value) => {
-
             });
         }
     </script>

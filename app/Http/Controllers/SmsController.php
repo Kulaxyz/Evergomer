@@ -14,15 +14,14 @@ class SmsController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        sleep(4);
-        if (isset($request->code) && is_int($request->code)) {
+        if (!isset($request->code)) {
             return response()->json([
                 'message' => 'Code is invalid!',
             ], 400);
         }
 
-//        if (!Msg91::verify(ltrim(backpack_user()->phone), $request->code)) {
-        if ($request->code != 1111) {
+        if (!Msg91::verify(ltrim(backpack_user()->phone), $request->code)) {
+//        if ($request->code !== 1111) {
             return response()->json([
                 'message' => 'Incorrect code!',
             ], 400);
