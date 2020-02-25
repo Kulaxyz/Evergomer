@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\Notifications\MoneyDeposited;
 use App\Payment;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Carbon\Carbon;
@@ -17,6 +18,9 @@ class WalletController extends Controller
 
     public function index()
     {
+        if (backpack_user()->can('edit_settings')) {
+            return redirect()->route('backpack.dashboard');
+        }
         return view('vendor.backpack.base.wallet');
     }
 
@@ -25,7 +29,6 @@ class WalletController extends Controller
         $amount = Input::get('amount');
         if ($amount <= 0) {
             session()->flash('error_message', 'Please, enter the amount');
-
             return redirect()->back();
         }
 
@@ -47,6 +50,8 @@ class WalletController extends Controller
                 $user = $payment->user;
                 $user->balance += $payment->amount;
                 $user->save();
+                $user->notify(new MoneyDeposited($payment));
+
             } elseif ($payment->type == 'invoice') {
                 $this->paid_invoice($payment->invoice);
             }
@@ -80,3 +85,4 @@ class WalletController extends Controller
     }
 
 }
+

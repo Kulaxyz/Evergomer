@@ -32,7 +32,8 @@ class RegisterController extends \Backpack\CRUD\app\Http\Controllers\Auth\Regist
      *
      * @var string
      */
-//    protected $redirectTo = '/home';
+    protected $redirectTo = '/cabinet/wallet';
+
 
     /**
      * Get a validator for an incoming registration request.

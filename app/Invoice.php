@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\BackpackUser;
+use App\Notifications\InvoicePaid;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,11 @@ class Invoice extends Model
     public function user()
     {
         return $this->belongsTo(BackpackUser::class, 'user_rfid', 'rfid');
+    }
+
+    public function owner()
+    {
+        return $this->device->owner;
     }
 
     public function payment()
@@ -75,6 +81,9 @@ class Invoice extends Model
 
     public function make_paid($from_wallet = true) : Invoice
     {
+        if ($this->paid_at != null && $this->status) {
+            abort(500, 'Invoice is already paid!');
+        }
         $this->status = true;
         if (!$from_wallet) {
             $this->payment_method = 'CCAvenue Payment Gateway';
@@ -93,6 +102,7 @@ class Invoice extends Model
         $owner->balance += $owner_profit;
 
         $owner->save();
+        $owner->notify(new InvoicePaid($this));
 
         return $this;
     }

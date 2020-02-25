@@ -15,27 +15,38 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-
+Route::get('/test', function () {
+    dd($_SERVER['HTTP_HOST']);
+});
 
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => ['web'],
 ], function () {
+//    Auth routes
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('backpack.auth.register');
     Route::post('/register', 'Auth\RegisterController@register');
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('backpack.auth.login');
     Route::post('/login', 'Auth\LoginController@login');
     Route::match(['get', 'post'], 'logout', 'Auth\LoginController@logout');
 
+//    Password routes
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('backpack.auth.password.reset');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-    Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('backpack.auth.password.reset.token');
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('backpack.auth.password.email');
-    Route::get('wallet', 'WalletController@index');
+    Route::post('password/phone', 'Auth\ForgotPasswordController@sendResetLinkOtp')->name('backpack.auth.password.phone');
+    Route::post('password/reset', 'Auth\ResetPasswordController@resetPass');
+    Route::get('password/reset/otp', 'Auth\ResetPasswordController@showResetForm')->name('backpack.auth.password.reset.token');
+
+//SMS routes
+    Route::post('/verify/otp', 'SmsController@verifyOtp')->name('verify.otp');
+    Route::get('/send/verification/code', 'SmsController@send')->name('send.verification.code')->middleware('admin');
+
+//Wallet Routes
+    Route::get('wallet', 'WalletController@index')->name('wallet');
     Route::post('pay_invoice/{invoice}', 'WalletController@payInvoice')->name('invoice.pay');
     Route::post('payment_status', 'WalletController@paymentStatus')->name('payment.status');
     Route::get('pay/{invoice}', 'WalletController@pay')->name('pay');
     Route::get('walletDeposit', 'WalletController@walletDeposit')->name('walletDeposit');
+
 }); // this should be the absolute last line of this file
 
 

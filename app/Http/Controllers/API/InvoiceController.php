@@ -31,6 +31,7 @@ class InvoiceController extends Controller
      */
     public function create(InvoiceRequest $request) : JsonResponse
     {
+        //TODO: notify user on session finish!!!
         $data = $request->toArray();
         $device = Device::where('serial_number', $data['device_serial'])->first();
         $amount = Invoice::countAmount($device, $data);

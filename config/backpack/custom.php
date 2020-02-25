@@ -1,4 +1,5 @@
 <?php
+
 $charging_times = array();
 //for($i=1; $i<=\Backpack\Settings\app\Models\Setting::get('max_charging_times'); $i++) {
 $charging_times[1] = '1 hour';

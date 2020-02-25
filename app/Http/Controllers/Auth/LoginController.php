@@ -25,7 +25,7 @@ class LoginController extends \Backpack\CRUD\app\Http\Controllers\Auth\LoginCont
      *
      * @var string
      */
-//    protected $redirectTo = '/cabinet';
+    protected $redirectTo = '/cabinet/wallet';
 
     /**
      * Create a new controller instance.
