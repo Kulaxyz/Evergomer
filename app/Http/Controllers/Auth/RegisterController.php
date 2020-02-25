@@ -32,7 +32,7 @@ class RegisterController extends \Backpack\CRUD\app\Http\Controllers\Auth\Regist
      *
      * @var string
      */
-    protected $redirectTo = '/cabinet/wallet';
+    protected $redirectTo = '/cabinet/edit-account-info';
 
 
     /**
