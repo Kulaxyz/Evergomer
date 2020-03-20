@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "ext-json": "*",
-        "androidneha/laravel-msg91": "^1.1",
+        "robincsamuel/laravel-msg91": "dev-master",
         "backpack/crud": "4.0.*",
         "backpack/permissionmanager": "^5.0",
         "backpack/settings": "^3.0",
@@ -18,7 +18,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "softon/indipay": "^1.1.2"
+        "softon/indipay": "^1.1.2",
+        "ext-openssl": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

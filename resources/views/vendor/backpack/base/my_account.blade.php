@@ -211,6 +211,7 @@
         let sendCode = () => {
             $.get("{{ route('send.verification.code') }}").then((response) => {
                 console.log('yes');
+                console.log(response)
             });
             let inner = document.createElement('div');
             let err = document.createElement('p');

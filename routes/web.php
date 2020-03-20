@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/test', function () {
-    dd($_SERVER['HTTP_HOST']);
+    RobinCSamuel\LaravelMsg91\Facades\LaravelMsg91::message('380939606674', 'testing');
 });
 
 Route::group([

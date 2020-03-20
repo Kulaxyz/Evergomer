@@ -22,6 +22,8 @@ trait MustVerifyPhoneNumber
 
     public function sendPhoneNumberNotification()
     {
+        $result = Msg91::otp(ltrim($this->phone));
+        return response()->json($result);
         if (Msg91::otp(ltrim($this->phone))) {
 //        if (rand(0, 1)) {
             return response()->json([

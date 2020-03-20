@@ -51,6 +51,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = ['phone_verified_at'];
 
     public function roles()
     {

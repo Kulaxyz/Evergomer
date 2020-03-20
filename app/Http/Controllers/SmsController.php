@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Msg91\Facade as Msg91;
 
@@ -26,6 +27,9 @@ class SmsController extends Controller
                 'message' => 'Incorrect code!',
             ], 400);
         }
+
+        backpack_user()->phone_verified_at = Carbon::now();
+        backpack_user()->save();
 
         return response()->json([
             'message' => 'Your Phone is verified'

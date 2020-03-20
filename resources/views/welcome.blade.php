@@ -97,3 +97,4 @@
         </div>
     </body>
 </html>
+<div id="noty_bar_5aa9a5a3-deb0-4a45-963e-6e385a9301b5" class="noty_bar noty_type__warning noty_theme__backstrap noty_close_with_click noty_has_timeout noty_has_progressbar noty_close_with_button"><div class="noty_body"><strong>You're using unlicensed software.</strong> Please ask your web developer to <a target="_blank" class="alert-link text-white" href="http://backpackforlaravel.com">purchase a license code</a> to hide this message.</div><div class="noty_progressbar" style="transition: width 2500ms linear 0s; width: 0%;"></div><div class="noty_close_button">×</div></div>
