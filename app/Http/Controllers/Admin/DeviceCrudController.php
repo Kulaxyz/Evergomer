@@ -390,8 +390,8 @@ class DeviceCrudController extends CrudController
                 'type' => 'number',
                 // optionals
                 'attributes' => ["step" => "0.01"], // allow decimals
-                'prefix' => "$",
-                'suffix' => 'USD/kWh',
+                'prefix' => "INR ",
+                'suffix' => 'INR/kWh',
             ],
             [
                 'name' => 'owner_cost',

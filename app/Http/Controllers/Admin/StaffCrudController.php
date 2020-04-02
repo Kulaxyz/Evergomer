@@ -68,8 +68,8 @@ class StaffCrudController extends CrudController
                 'label' => 'Balance',
                 'type' => 'string',
                 // optionals
-//                 'attributes' => ["step" => "0.01"], // allow decimals
-                'prefix' => "$",
+                 'attributes' => ["step" => "0.01"], // allow decimals
+                'prefix' => "INR ",
             ],
             [
                 'name' => 'verified',

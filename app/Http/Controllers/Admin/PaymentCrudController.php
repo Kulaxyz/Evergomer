@@ -52,7 +52,7 @@ class PaymentCrudController extends CrudController
         $this->crud->setColumns([
             [
                 // run a function on the CRUD model and show its return value
-                'name' => "user_rfid",
+                'name' => "user_id",
                 'label' => "User", // Table column heading
                 'type' => "model_function",
                 'function_name' => 'userLink', // the method in your Model

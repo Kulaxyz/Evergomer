@@ -66,7 +66,7 @@ class UserCrudController extends CrudController
                 'type' => 'string',
                 // optionals
 //                 'attributes' => ["step" => "0.01"], // allow decimals
-                 'prefix' => "$",
+                 'prefix' => "INR ",
             ],
             [
                 'name' => 'verified',
