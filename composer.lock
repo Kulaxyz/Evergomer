@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce2a72b488b53c2ff4e3baec770ced77",
+    "content-hash": "02eef0dc1a4f60cac5222e48dd61954e",
     "packages": [
+        {
+            "name": "androidneha/laravel-msg91",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/androidneha/laravel-msg91.git",
+                "reference": "30b9960d51d5dc13e2897868e47a962eddec1e7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/androidneha/laravel-msg91/zipball/30b9960d51d5dc13e2897868e47a962eddec1e7b",
+                "reference": "30b9960d51d5dc13e2897868e47a962eddec1e7b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^5.0||^6.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Msg91\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Msg91": "Laravel\\Msg91\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Msg91\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Neha Sharma",
+                    "email": "neha8q@gmail.com"
+                }
+            ],
+            "description": "Laravel integration for Msg91 messaging API.",
+            "keywords": [
+                "integration",
+                "laravel",
+                "msg91",
+                "otp",
+                "sms"
+            ],
+            "time": "2019-10-09T03:40:59+00:00"
+        },
         {
             "name": "backpack/crud",
             "version": "4.0.43",

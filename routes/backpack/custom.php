@@ -12,11 +12,14 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::get('edit-account-info', 'MyAccountController@getAccountInfoForm')->name('backpack.account.info');
+    Route::get('sms-settings', 'SmsSettingsCrudController@index')->name('backpack.sms.settings');
+    Route::post('msg-settings', 'SmsSettingsCrudController@msg91')->name('msg.settings');
     Route::post('edit-account-info', 'MyAccountController@postAccountInfoForm');
     Route::post('change-password', 'MyAccountController@postChangePasswordForm')->name('backpack.account.password');
 
     Route::crud('device', 'DeviceCrudController');
     Route::crud('invoice', 'InvoiceCrudController');
+    Route::crud('payment', 'PaymentCrudController');
     Route::crud('staff', 'StaffCrudController');
     Route::crud('connection_method', 'ConnectionMethodCrudController');
     Route::crud('installed_place', 'InstalledPlaceCrudController');

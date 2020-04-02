@@ -28,7 +28,7 @@ trait SavesImages {
         // but first, remove "public/" from the path, since we're pointing to it from the root folder
         // that way, what gets saved in the database is the user-accesible URL
         $public_destination_path = Str::replaceFirst('public/', '', $destination_path);
-        return 'storage/'.$public_destination_path.'/'.$filename;
+        return '/storage/'.$public_destination_path.'/'.$filename;
     }
 
 }

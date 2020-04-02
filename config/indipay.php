@@ -23,7 +23,7 @@ return [
         'redirectUrl' => env('INDIPAY_REDIRECT_URL', 'payment_status'),
         'cancelUrl' => env('INDIPAY_CANCEL_URL', 'payment_status'),
 
-        'currency' => env('INDIPAY_CURRENCY', 'USD'),
+        'currency' => env('INDIPAY_CURRENCY', 'INR'),
         'language' => env('INDIPAY_LANGUAGE', 'EN'),
     ],
 

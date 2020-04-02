@@ -63,7 +63,7 @@
                     </ul>
                 </li>
             @endcan
-            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('setting') }}"><i class="nav-icon fa fa-user"></i><span>General</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('sms-settings') }}"><i class="nav-icon fa fa-envelope"></i><span>Sms Settings</span></a></li>
         </ul>
     </li>
 

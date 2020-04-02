@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('notify-settings', 'SettingsController@change')->name('notify-settings');
 Auth::routes();
 Route::get('/test', function () {
     RobinCSamuel\LaravelMsg91\Facades\LaravelMsg91::message('380939606674', 'testing');

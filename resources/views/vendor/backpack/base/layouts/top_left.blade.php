@@ -4,7 +4,7 @@
 
 <head>
   @include(backpack_view('inc.head'))
-
+    @yield('head_style')
 </head>
 
 <body class="{{ config('backpack.base.body_class') }}">

@@ -108,6 +108,7 @@
       <path value="$PROJECT_DIR$/vendor/backpack/permissionmanager" />
       <path value="$PROJECT_DIR$/vendor/softon/indipay" />
       <path value="$PROJECT_DIR$/vendor/robincsamuel/laravel-msg91" />
+      <path value="$PROJECT_DIR$/vendor/androidneha/laravel-msg91" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
