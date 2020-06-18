@@ -11,16 +11,17 @@ class LastOnlineAt
 {
     public function handle($request, Closure $next)
     {
-        if (backpack_auth()->guest()) {
+        if (auth()->guest()) {
             return $next($request);
         }
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', backpack_user()->last_online_at);
-        if ($date->diffInMinutes(now()) !== 0)
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', auth()->user()->last_online_at);
+        if ($date->diffInMinutes(Carbon::now()) !== 0)
         {
             DB::table("users")
-                ->where("id", backpack_user()->id)
+                ->where("id", auth()->id())
                 ->update(["last_online_at" => Carbon::now()]);
         }
+
         return $next($request);
     }
 }

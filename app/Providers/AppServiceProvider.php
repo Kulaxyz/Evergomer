@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         date_default_timezone_set('America/Toronto');
+        Role::findOrCreate('admin');
+        Role::findOrCreate('user');
+        Role::findOrCreate('owner');
     }
 }

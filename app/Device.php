@@ -67,7 +67,7 @@ class Device extends Model
 
     public function tariffPrice()
     {
-        return $this->hour_cost.'$ + Owner '.$this->owner_cost . '% + Service '.$this->service_cost.'%';
+        return $this->hour_cost.' INR + Owner '.$this->owner_cost . '% + Service '.$this->service_cost.'%';
     }
 
     public function chargingTimes()
