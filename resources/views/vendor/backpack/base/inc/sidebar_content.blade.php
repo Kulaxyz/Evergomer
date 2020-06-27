@@ -68,7 +68,27 @@
                     </ul>
                 </li>
             @endcan
+
+{{--                Invoice Settings--}}
+            <li  style="padding-left: 0.8rem;" class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-group"></i>Invoice Settings</a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('payment.pdf.settings') }}"><i class="nav-icon fa fa-money"></i> <span>Wallet Settings</span></a></li>
+
+{{--                    <li style="padding-left: 0.8rem;" class="nav-item nav-dropdown">--}}
+{{--                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-money"></i>Invoice Settings</a>--}}
+{{--                        <ul class="nav-dropdown-items">--}}
+{{--                            <li class="nav-item"><a class="nav-link" href="{{ backpack_url('role') }}"><i class="nav-icon fa fa-money"></i> <span>Wallet Settings</span></a></li>--}}
+
+{{--                        </ul>--}}
+{{--                    </li>--}}
+                </ul>
+            </li>
+
+{{--        SMS Settings--}}
             <li class="nav-item"><a class="nav-link" href="{{ backpack_url('sms-settings') }}"><i class="nav-icon fa fa-envelope"></i><span>Sms Settings</span></a></li>
+
         </ul>
     </li>
 

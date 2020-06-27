@@ -30,7 +30,7 @@ class PaymentCrudController extends CrudController
         $this->crud->setEntityNameStrings('Wallet Invoice', 'Wallet Invoices');
         $this->crud->setRoute(backpack_url('payment'));
         $this->crud->denyAccess('delete');
-        $this->crud->denyAccess('update');
+//        $this->crud->denyAccess('update');
         $this->crud->allowAccess('show');
 
         if (!backpack_user()->hasRole('admin') && !backpack_user()->can('edit_invoices')) {
@@ -45,6 +45,7 @@ class PaymentCrudController extends CrudController
             $this->crud->denyAccess('delete');
             $this->crud->denyAccess('create');
         }
+        $this->crud->addButtonFromModelFunction('line', 'open_pdf', 'open_pdf', 'beginning');
     }
 
     public function setupListOperation()
@@ -62,13 +63,29 @@ class PaymentCrudController extends CrudController
                 'name' => 'amount',
                 'label' => 'Amount',
                 'type' => 'string',
-                'prefix' => 'INR'
+                'prefix' => config('app.currency')
             ],
             [
                 'name' => 'status',
                 'label' => 'Status',
                 'type' => 'boolean',
-                'options' => [0 => 'Waiting', 1 => 'Paid']
+                'options' => [0 => 'DUE', 1 => 'PAID']
+            ],
+            [
+                'name' => 'by_admin',
+                'label' => 'Invoice By',
+                'type' => 'model_function',
+                'function_name' => 'invoice_by',
+            ],
+            [
+                'name' => 'payment_method',
+                'label' => 'Payment Method',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'reference',
+                'label' => 'Payment Reference',
+                'type' => 'text',
             ],
             [
                 'name' => 'created_at',
@@ -79,11 +96,6 @@ class PaymentCrudController extends CrudController
                 'name' => 'paid_at',
                 'label' => 'Paid At',
                 'type' => 'date',
-            ],
-            [
-                'name' => 'payment_method',
-                'label' => 'Payment Method',
-                'type' => 'text',
             ],
         ]);
 
@@ -113,12 +125,22 @@ class PaymentCrudController extends CrudController
             ],
             [
                 'name' => 'payment_method',
-                'label' => 'Payment Method',
-                'type' => 'hidden',
+                'label' => 'Payment Method (Cash/Bank/Credit/Payment Gateway/etc.)',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'reference',
+                'label' => 'Payment Reference',
+                'type' => 'text',
             ],
             [
                 'name' => 'type',
                 'label' => 'Type',
+                'type' => 'hidden',
+            ],
+            [
+                'name' => 'by_admin',
+                'label' => 'Label',
                 'type' => 'hidden',
             ],
             [   // radio
@@ -127,7 +149,7 @@ class PaymentCrudController extends CrudController
                 'type'        => 'radio',
                 'options'     => [
                     // the key will be stored in the db, the value will be shown as label;
-                    0 => "Waiting",
+                    0 => "Due",
                     1 => "Paid"
                 ],
                 // optional
@@ -151,7 +173,7 @@ class PaymentCrudController extends CrudController
                 'type' => 'number',
                 // optionals
                 'attributes' => ["step" => "0.01"], // allow decimals
-                'prefix' => "INR",
+                'prefix' => config('app.currency'),
             ],
         ]);
         $this->crud->setValidation(StoreRequest::class);
@@ -160,7 +182,7 @@ class PaymentCrudController extends CrudController
 
     public function setupUpdateOperation()
     {
-//        $this->setupCreateOperation();
+        $this->setupCreateOperation();
         $this->crud->setValidation(UpdateRequest::class);
     }
 
@@ -195,13 +217,15 @@ class PaymentCrudController extends CrudController
 
     public function addAmount($request)
     {
-        $request->merge(['payment_method' => 'admin']);
         $request->merge(['type' => 'wallet']);
+        $request->merge(['by_admin' => backpack_user()->id]);
+
         if ((bool) $request->status && $request->paid_at) {
             $user = User::find($request->user_id);
             $user->balance += $request->amount;
             $user->save();
         }
+
 
         return $request;
     }

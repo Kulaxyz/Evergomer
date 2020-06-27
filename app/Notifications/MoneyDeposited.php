@@ -52,7 +52,7 @@ class MoneyDeposited extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->greeting('Successfully deposited!')
-                    ->line('Your balance now is: '.$notifiable->balance.' INR.');
+                    ->line('Your balance now is: '.$notifiable->balance.' .'.config('app.currency'));
     }
 
     /**

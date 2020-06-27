@@ -48,8 +48,8 @@ class InvoicePaid extends Notification implements ShouldQueue
         return (new Msg91Message)
             ->message("Invoice #".$this->invoice->id." was paid!\n"
                 ."Device: ".$this->invoice->device->name .".\n"
-                ."Amount: ".$this->invoice->amount." INR\n"
-                ."Your balance is: ".$notifiable->amount.' INR')
+                ."Amount: ".$this->invoice->amount . config('app.currency')."\n"
+                ."Your balance is: ".$notifiable->amount . config('app.currency'))
             ->transactional();
     }
 
@@ -64,8 +64,8 @@ class InvoicePaid extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->greeting('Invoice #'.$this->invoice->id.' was paid!')
                     ->line('Device: '.$this->invoice->device->name)
-                    ->line('Amount: '.$this->invoice->amount.' INR')
-                    ->line('Your balance: ' .$notifiable->balance.' INR');
+                    ->line('Amount: '.$this->invoice->amount.config('app.currency'))
+                    ->line('Your balance: ' .$notifiable->balance.config('app.currency'));
     }
 
     /**

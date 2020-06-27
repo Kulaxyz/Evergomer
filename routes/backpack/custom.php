@@ -17,6 +17,9 @@ Route::group([
     Route::post('edit-account-info', 'MyAccountController@postAccountInfoForm');
     Route::post('change-password', 'MyAccountController@postChangePasswordForm')->name('backpack.account.password');
 
+    Route::get('payment_pdf_settings', '\App\Http\Controllers\SettingsController@payment_pdf_settings')->name('payment.pdf.settings');
+    Route::post('payment_pdf_settings', '\App\Http\Controllers\SettingsController@update_pdf_settings')->name('payment.pdf.settings');
+
     Route::crud('device', 'DeviceCrudController');
     Route::crud('invoice', 'InvoiceCrudController');
     Route::crud('payment', 'PaymentCrudController');

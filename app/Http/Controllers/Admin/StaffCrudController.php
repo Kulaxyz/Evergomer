@@ -69,7 +69,7 @@ class StaffCrudController extends CrudController
                 'type' => 'string',
                 // optionals
                  'attributes' => ["step" => "0.01"], // allow decimals
-                'prefix' => "INR ",
+                'prefix' => config('app.currency'),
             ],
             [
                 'name' => 'verified',

@@ -49,7 +49,7 @@ class ChargeFinished extends Notification implements ShouldQueue
             ->message("Charge Session #".$this->charge->id ." Finished!\n"
                 ."Power Consumed: ".$this->charge->power
                 ." kWh.\n"
-                ."Charged amount: ".$this->charge->amount.' INR')
+                ."Charged amount: ".$this->charge->amount . config('app.currency'))
             ->transactional(); // or promotional() [Optional] - Will pick default route from MSG91_DEFAULT_ROUTE or config
     }
 
@@ -65,7 +65,7 @@ class ChargeFinished extends Notification implements ShouldQueue
                     ->greeting('Charge Session Finished!')
                     ->line('The session #'.$this->charge->id.' is finished.')
                     ->line('Power Consumed: '.$this->charge->power.'kWh.')
-                    ->line('Charged amount: '.$this->charge->amount.' INR.');
+                    ->line('Charged amount: '.$this->charge->amount.config('app.currency'));
     }
 
     /**

@@ -76,7 +76,7 @@ class InvoiceCrudController extends CrudController
                 'name' => 'amount',
                 'label' => 'Amount',
                 'type' => 'string',
-                'prefix' => 'INR '
+                'prefix' => config('app.currency')
             ],
             [
                 'name' => 'charge_duration',

@@ -19,6 +19,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "laraveldaily/laravel-invoices": "^1.3",
         "robincsamuel/laravel-msg91": "dev-master",
         "softon/indipay": "^1.1.2"
     },

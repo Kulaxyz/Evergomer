@@ -41,7 +41,7 @@ class WalletController extends Controller
 
         if ($response['order_status'] == 'Success') {
             $payment = Payment::with('invoice', 'user')->find($response['order_id']);
-            $payment->status = true;
+            $payment->status = Payment::STATUS_PAID;
             $payment->payment_method = 'CCAvenue Payment Gateway';
             $payment->paid_at = Carbon::now();
             $payment->save();

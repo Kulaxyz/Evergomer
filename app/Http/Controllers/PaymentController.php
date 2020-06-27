@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -13,5 +14,10 @@ class PaymentController extends Controller
             'success' => true,
             'Invoice was paid!',
         ], 200);
+    }
+
+    public function getPDF(Payment $payment)
+    {
+        return $payment->pdf();
     }
 }

@@ -11,13 +11,16 @@
 |
 */
 
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Classes\Party;
+
 Route::get('/', function () {
     return view('welcome');
 });
 Route::post('notify-settings', 'SettingsController@change')->name('notify-settings');
 Auth::routes();
 Route::get('/test', function () {
-    RobinCSamuel\LaravelMsg91\Facades\LaravelMsg91::message('380939606674', 'testing');
+    echo phpinfo();
 });
 
 Route::group([
@@ -48,6 +51,8 @@ Route::group([
     Route::get('pay/{invoice}', 'WalletController@pay')->name('pay');
     Route::get('walletDeposit', 'WalletController@walletDeposit')->name('walletDeposit');
 
+//PDF
+    Route::get('/invoice/pdf/{payment}', 'PaymentController@getPDF')->name('payment.pdf');
 }); // this should be the absolute last line of this file
 
 
