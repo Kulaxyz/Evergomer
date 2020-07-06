@@ -15,7 +15,8 @@ class Payment extends Model
         'type', 'amount', 'user_id',
         'invoice_id', 'paid_at',
         'payment_method', 'by_admin',
-        'reference',
+        'reference', 'custom_id',
+        'status',
     ];
     protected $dates = ['paid_at'];
     public const STATUS_DUE = 0;

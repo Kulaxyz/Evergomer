@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaymentRequest extends FormRequest
+class PaymentUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,12 @@ class PaymentRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->get('id');
         return [
             'user_id' => 'required',
             'amount' => 'required',
             'status' => 'required',
-            'custom_id' => 'required|unique:payments,custom_id',
+            'custom_id' => 'required|unique:payments,custom_id,'.$id,
         ];
     }
 }

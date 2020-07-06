@@ -9,7 +9,7 @@ use App\Payment;
 use App\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\PaymentRequest as StoreRequest;
-use App\Http\Requests\PaymentRequest as UpdateRequest;
+use App\Http\Requests\PaymentUpdateRequest as UpdateRequest;
 
 
 class PaymentCrudController extends CrudController
@@ -122,6 +122,12 @@ class PaymentCrudController extends CrudController
                 'entity'    => 'user', // the method that defines the relationship in your Model
                 'attribute' => 'name', // foreign key attribute that is shown to user
                 'model'     =>  BackpackUser::class, // foreign key model
+            ],
+            [
+                'name' => 'custom_id',
+                'type' => 'number',
+                'label' => 'Payment ID',
+                // optionals
             ],
             [
                 'name' => 'payment_method',

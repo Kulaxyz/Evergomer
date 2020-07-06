@@ -26,6 +26,9 @@ class InvoicePDF extends Invoice
 
     public function getPaymentId()
     {
+        if ($this->payment->custom_id) {
+            return $this->payment->custom_id;
+        }
         return $this->payment->id;
     }
 
@@ -40,7 +43,7 @@ class InvoicePDF extends Invoice
     {
         $date = $this->payment->created_at->format('YmdHi');
 
-        return CustomSettings::get('payment_pdf_prefix').'-'.$date.$this->payment->id;
+        return CustomSettings::get('payment_pdf_prefix').'-'.$date.$this->getPaymentId();
     }
 
     public function getPaymentRefference()
