@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::post('notify-settings', 'SettingsController@change')->name('notify-settings');
 Auth::routes();
 Route::get('/test', function () {
-    echo config('msg91.default_sender');
+    \App\Payment::whereNull('number')->delete();
 });
 
 Route::group([
@@ -52,7 +52,7 @@ Route::group([
     Route::get('walletDeposit', 'WalletController@walletDeposit')->name('walletDeposit');
 
 //PDF
-    Route::get('/invoice/pdf/{payment}', 'PaymentController@getPDF')->name('payment.pdf');
+    Route::get('/invoice/pdf/{payment_number}', 'PaymentController@getPDF')->name('payment.pdf');
 }); // this should be the absolute last line of this file
 
 

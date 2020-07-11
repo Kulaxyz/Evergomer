@@ -44,7 +44,7 @@ class Payment extends Model
 
     public function open_pdf()
     {
-        return "<a href='".route('payment.pdf', $this->id)."'>PDF</a>";
+        return "<a href='".route('payment.pdf', $this->number)."'>PDF</a>";
     }
 
     public function pdf()

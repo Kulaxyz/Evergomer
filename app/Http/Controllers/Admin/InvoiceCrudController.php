@@ -59,6 +59,11 @@ class InvoiceCrudController extends CrudController
 //        }
         $this->crud->setColumns([
             [
+                'name' => 'finished_at',
+                'label' => 'Date',
+                'type' => 'datetime',
+            ],
+            [
                 // run a function on the CRUD model and show its return value
                 'name' => "device_serial",
                 'label' => "Device", // Table column heading
@@ -74,70 +79,65 @@ class InvoiceCrudController extends CrudController
                 'function_name' => 'userLink', // the method in your Model
                  'limit' => 1000, // Limit the number of characters shown
             ],
-            [
-                // run a function on the CRUD model and show its return value
-                'name' => "charge_id",
-                'label' => "Session ID", // Table column heading
-                'type' => "model_function",
-                'function_name' => 'charge_info', // the method in your Model
-                 'limit' => 1000, // Limit the number of characters shown
-            ],
+//            [
+//                // run a function on the CRUD model and show its return value
+//                'name' => "charge_id",
+//                'label' => "Session ID", // Table column heading
+//                'type' => "model_function",
+//                'function_name' => 'charge_info', // the method in your Model
+//                 'limit' => 1000, // Limit the number of characters shown
+//            ],
             [
                 'name' => 'amount',
                 'label' => 'Amount',
                 'type' => 'string',
                 'prefix' => config('app.currency')
             ],
-            [
-                'name' => 'charge_power',
-                'label' => 'Consumed Power',
-                'type' => 'string',
-                'suffix' => ' kWh'
-            ],
-            [
-                'name' => 'auth_type',
-                'label' => 'Auth Type',
-                'type' => 'string',
-            ],
+//            [
+//                'name' => 'charge_power',
+//                'label' => 'Consumed Power',
+//                'type' => 'string',
+//                'suffix' => ' kWh'
+//            ],
+//            [
+//                'name' => 'auth_type',
+//                'label' => 'Auth Type',
+//                'type' => 'string',
+//            ],
             [
                 'name' => 'status',
                 'label' => 'Status',
                 'type' => 'boolean',
                 'options' => [1 => 'Charging', 2 => 'Completed']
             ],
-            [
-                'name' => 'started_at',
-                'label' => 'Charging Start',
-                'type' => 'datetime',
-            ],
+//            [
+//                'name' => 'started_at',
+//                'label' => 'Charging Start',
+//                'type' => 'datetime',
+//            ],
             [
                 'name' => 'charge_duration',
                 'label' => 'Charge Duration',
                 'type' => 'string',
                 'suffix' => ' minutes'
             ],
-            [
-                'name' => 'finished_at',
-                'label' => 'Charging End',
-                'type' => 'datetime',
-            ],
-            [
-                'name' => 'charge_hours',
-                'label' => 'Charge Hours',
-                'type' => 'model_function',
-                'function_name' => 'charge_hours_text',
-                'limit' => 1000, // Limit the number of characters shown
-            ],
-            [
-                'name' => 'port_number', // The db column name
-                'label' => "Port", // Table column heading
-                'type' => 'number',
-            ],
-            [
-                'name' => 'paid_at',
-                'label' => 'Paid At',
-                'type' => 'date',
-            ],
+//            [
+//                'name' => 'charge_hours',
+//                'label' => 'Charge Hours',
+//                'type' => 'model_function',
+//                'function_name' => 'charge_hours_text',
+//                'limit' => 1000, // Limit the number of characters shown
+//            ],
+//            [
+//                'name' => 'port_number', // The db column name
+//                'label' => "Port", // Table column heading
+//                'type' => 'number',
+//            ],
+//            [
+//                'name' => 'paid_at',
+//                'label' => 'Paid At',
+//                'type' => 'date',
+//            ],
         ]);
 
         $this->crud->enableExportButtons();
@@ -166,11 +166,11 @@ class InvoiceCrudController extends CrudController
             ],
             [
                 // 1-n relationship
-                'label'     => 'User RFID', // Table column heading
+                'label'     => 'User ID', // Table column heading
                 'type'      => 'select2',
                 'name'      => 'user_rfid', // the column that contains the ID of that connected entity;
                 'entity'    => 'user', // the method that defines the relationship in your Model
-                'attribute' => 'rfid', // foreign key attribute that is shown to user
+                'attribute' => 'id', // foreign key attribute that is shown to user
                 'model'     => BackpackUser::class, // foreign key model
             ],
             [

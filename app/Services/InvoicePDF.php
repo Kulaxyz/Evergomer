@@ -41,9 +41,17 @@ class InvoicePDF extends Invoice
 
     public function getSerialNumber()
     {
-        $date = $this->payment->created_at->format('YmdHi');
+        return CustomSettings::get('payment_pdf_prefix').'-'.$this->getPaymentNumber();
+    }
 
-        return CustomSettings::get('payment_pdf_prefix').'-'.$date.$this->getPaymentId();
+    public function getPaymentNumber()
+    {
+        return $this->payment->number;
+    }
+
+    public function getDate()
+    {
+        return $this->payment->created_at->format('Y-m-d');
     }
 
     public function getPaymentRefference()

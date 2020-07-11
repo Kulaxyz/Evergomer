@@ -16,8 +16,9 @@ class PaymentController extends Controller
         ], 200);
     }
 
-    public function getPDF(Payment $payment)
+    public function getPDF($payment_number)
     {
+        $payment = Payment::where('number', $payment_number)->first();
         return $payment->pdf();
     }
 }

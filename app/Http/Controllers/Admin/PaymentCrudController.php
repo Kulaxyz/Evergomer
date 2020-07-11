@@ -125,7 +125,7 @@ class PaymentCrudController extends CrudController
             ],
             [
                 'name' => 'custom_id',
-                'type' => 'number',
+                'type' => 'text',
                 'label' => 'Payment ID',
                 // optionals
             ],
@@ -167,7 +167,7 @@ class PaymentCrudController extends CrudController
                 'type'  => 'date_picker',
                 // optional:
                 'date_picker_options' => [
-                    'todayBtn' => true,
+                    'todayBtn' => 'linked',
                     'format'   => 'dd-mm-yyyy',
                     'language' => 'en',
                     'clearBtn' => true,

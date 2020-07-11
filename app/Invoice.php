@@ -55,7 +55,7 @@ class Invoice extends Model
 
     public function deviceLink()
     {
-        $name = $this->device->name;
+        $name = $this->device->serial_number;
         if (backpack_user()->can('view_devices') || backpack_user()->can('edit_devices')) {
             $link = '/cabinet/device/' . $this->device->id . '/show';
             return "<a href=" . $link . ">$name</a>";
