@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::post('notify-settings', 'SettingsController@change')->name('notify-settings');
 Auth::routes();
 Route::get('/test', function () {
-    echo phpinfo();
+    echo config('msg91.default_sender');
 });
 
 Route::group([

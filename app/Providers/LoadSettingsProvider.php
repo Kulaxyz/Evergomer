@@ -25,26 +25,31 @@ class LoadSettingsProvider extends ServiceProvider
      */
     public function boot()
     {
-        $msg = DB::select('select * from msgs limit 1')[0];
-        config([
-            'msg91.auth_key' => $msg->auth_key
-        ]);
-        config([
-            'msg91.default_route' => $msg->route
-        ]);
-        config([
-            'msg91.default_country' => $msg->country_code
-        ]);
-        config([
-            'msg91.default_sender' => $msg->sender
-        ]);
-        config([
-            'backpack.custom.default_role' => \Illuminate\Support\Facades\DB::select('select * from roles where name=:name', ['name' => 'user'])[0]->id,
-        ]);
+        try {
+            $msg = DB::select('select * from msgs limit 1')[0];
+            config([
+                'msg91.auth_key' => $msg->auth_key
+            ]);
+            config([
+                'msg91.default_route' => $msg->route
+            ]);
+            config([
+                'msg91.default_country' => $msg->country_code
+            ]);
+            config([
+                'msg91.default_sender' => $msg->sender
+            ]);
+            config([
+                'backpack.custom.default_role' => \Illuminate\Support\Facades\DB::select('select * from roles where name=:name', ['name' => 'user'])[0]->id,
+            ]);
 
-        config([
-            'backpack.custom.owner_role' => \Illuminate\Support\Facades\DB::select('select * from roles where name=:name', ['name' => 'owner'])[0]->id,
-        ]);
+            config([
+                'backpack.custom.owner_role' => \Illuminate\Support\Facades\DB::select('select * from roles where name=:name', ['name' => 'owner'])[0]->id,
+            ]);
 
+        } catch (\Exception $e) {
+            die("Could not connect to the database.  Please check your configuration. error:" . $e );
+            echo $e->getMessage();
+        }
     }
 }

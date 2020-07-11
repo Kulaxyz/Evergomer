@@ -18,11 +18,13 @@ class CreateChargesTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('device_id')->unsigned()->nullable();
             $table->bigInteger('invoice_id')->unsigned()->nullable();
-            $table->double('amount')->nullable();
+            $table->double('power')->nullable();
             $table->smallInteger('status')->nullable();
             $table->smallInteger('type')->nullable();
+            $table->double('charging_time')->nullable();
             $table->smallInteger('port')->nullable();
             $table->timestamp('finished_at')->nullable();
+            $table->string('custom_id')->nullable();
             $table->timestamps();
         });
     }

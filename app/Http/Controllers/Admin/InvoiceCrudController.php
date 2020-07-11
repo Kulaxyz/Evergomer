@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charge;
 use App\Device;
 use App\Invoice;
 use App\Models\BackpackUser;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\InvoiceRequest as StoreRequest;
 use App\Http\Requests\InvoiceRequest as UpdateRequest;
+use Carbon\Carbon;
 
 
 class InvoiceCrudController extends CrudController
@@ -44,7 +46,7 @@ class InvoiceCrudController extends CrudController
             }
             $this->crud->denyAccess('update');
             $this->crud->denyAccess('delete');
-            $this->crud->denyAccess('create');
+//            $this->crud->denyAccess('create');
         }
     }
 
@@ -73,16 +75,18 @@ class InvoiceCrudController extends CrudController
                  'limit' => 1000, // Limit the number of characters shown
             ],
             [
+                // run a function on the CRUD model and show its return value
+                'name' => "charge_id",
+                'label' => "Session ID", // Table column heading
+                'type' => "model_function",
+                'function_name' => 'charge_info', // the method in your Model
+                 'limit' => 1000, // Limit the number of characters shown
+            ],
+            [
                 'name' => 'amount',
                 'label' => 'Amount',
                 'type' => 'string',
                 'prefix' => config('app.currency')
-            ],
-            [
-                'name' => 'charge_duration',
-                'label' => 'Charge Duration',
-                'type' => 'string',
-                'suffix' => ' minutes'
             ],
             [
                 'name' => 'charge_power',
@@ -91,30 +95,48 @@ class InvoiceCrudController extends CrudController
                 'suffix' => ' kWh'
             ],
             [
+                'name' => 'auth_type',
+                'label' => 'Auth Type',
+                'type' => 'string',
+            ],
+            [
                 'name' => 'status',
                 'label' => 'Status',
                 'type' => 'boolean',
-                'options' => [0 => 'Waiting', 1 => 'Paid']
+                'options' => [1 => 'Charging', 2 => 'Completed']
             ],
             [
-                'name' => 'created_at',
-                'label' => 'Created At',
-                'type' => 'date',
+                'name' => 'started_at',
+                'label' => 'Charging Start',
+                'type' => 'datetime',
+            ],
+            [
+                'name' => 'charge_duration',
+                'label' => 'Charge Duration',
+                'type' => 'string',
+                'suffix' => ' minutes'
+            ],
+            [
+                'name' => 'finished_at',
+                'label' => 'Charging End',
+                'type' => 'datetime',
+            ],
+            [
+                'name' => 'charge_hours',
+                'label' => 'Charge Hours',
+                'type' => 'model_function',
+                'function_name' => 'charge_hours_text',
+                'limit' => 1000, // Limit the number of characters shown
             ],
             [
                 'name' => 'port_number', // The db column name
-                'label' => "Used Port", // Table column heading
+                'label' => "Port", // Table column heading
                 'type' => 'number',
             ],
             [
                 'name' => 'paid_at',
                 'label' => 'Paid At',
                 'type' => 'date',
-            ],
-            [
-                'name' => 'payment_method',
-                'label' => 'Payment Method',
-                'type' => 'text',
             ],
         ]);
 
@@ -151,6 +173,11 @@ class InvoiceCrudController extends CrudController
                 'attribute' => 'rfid', // foreign key attribute that is shown to user
                 'model'     => BackpackUser::class, // foreign key model
             ],
+            [
+                'label'     => 'Session ID',
+                'type'      => 'number',
+                'name'      => 'charge_id'
+            ],
         ]);
         $this->addDeviceFields();
         $this->crud->setValidation(StoreRequest::class);
@@ -173,6 +200,8 @@ class InvoiceCrudController extends CrudController
         $this->crud->request = $this->crud->validateRequest();
         $this->crud->unsetValidation(); // validation has already been run
         $this->crud->request = $this->addAmount($this->crud->request);
+        $this->crud->request = $this->handleTime($this->crud->request);
+        $this->crud->request = $this->handleSession($this->crud->request);
 
         return $this->traitStore();
     }
@@ -187,6 +216,7 @@ class InvoiceCrudController extends CrudController
         $this->crud->request = $this->crud->validateRequest();
         $this->crud->unsetValidation(); // validation has already been run
         $this->crud->request = $this->addAmount($this->crud->request);
+        $this->crud->request = $this->handleTime($this->crud->request);
 
         return $this->traitUpdate();
     }
@@ -194,6 +224,11 @@ class InvoiceCrudController extends CrudController
     protected function addDeviceFields()
     {
         $this->crud->addFields([
+            [
+                'name' => 'auth_type',
+                'label' => 'Auth Type',
+                'type' => 'text',
+            ],
             [
                 'name' => 'charge_duration',
                 'label' => 'Charge Duration',
@@ -220,9 +255,9 @@ class InvoiceCrudController extends CrudController
                 'type' => 'number',
             ],
             [
-                'name' => 'payment_method',
-                'label' => 'Payment Method',
-                'type' => 'text',
+                'name' => 'charge_hours',
+                'label' => 'Charge Hours (Leave empty if "Auto")',
+                'type' => 'number',
             ],
             [   // radio
                 'name'        => 'status', // the name of the db column
@@ -230,20 +265,21 @@ class InvoiceCrudController extends CrudController
                 'type'        => 'radio',
                 'options'     => [
                     // the key will be stored in the db, the value will be shown as label;
-                    0 => "Waiting",
-                    1 => "Paid"
+                    1 => "Charging",
+                    2 => "Completed",
+                    3 => 'Aborted (Error)'
                 ],
                 // optional
                 //'inline'      => false, // show the radios all on the same line?
             ],
             [   // Date
-                'name'  => 'paid_at',
-                'label' => 'Paid At',
-                'type'  => 'date_picker',
+                'name'  => 'finished_at',
+                'label' => 'Charging End',
+                'type'  => 'datetime_picker',
                 // optional:
                 'date_picker_options' => [
                     'todayBtn' => true,
-                    'format'   => 'dd-mm-yyyy',
+                    'format'   => 'dd-mm-yyyy hh:ii',
                     'language' => 'en',
                     'clearBtn' => true,
                 ],
@@ -254,7 +290,31 @@ class InvoiceCrudController extends CrudController
                 'type' => 'hidden',
                 'value' => 0
             ],
+            [
+                'name' => 'started_at',
+                'type' => 'hidden',
+                'value' => Carbon::now(),
+            ],
         ]);
+    }
+
+    public function handleSession($request)
+    {
+        if ($request->charge_id) {
+            $charge = Charge::where('custom_id', $request->charge_id)->first();
+            if ($charge) {
+                $request->request->set('charge_id', $charge->id);
+            }
+        }
+        return $request;
+    }
+
+    public function handleTime($request)
+    {
+        $start = Carbon::parse($request->finished_at)->subMinutes($request->charge_duration);
+        $request->request->set('started_at', $start);
+
+        return $request;
     }
 
     public function addAmount($request)

@@ -65,6 +65,11 @@ class Device extends Model
         return '<a href="">Map</a>';
     }
 
+    public function charge()
+    {
+        return $this->hasMany(Charge::class);
+    }
+
     public function tariffPrice()
     {
         return $this->hour_cost.config('app.currency').' + Owner '.$this->owner_cost . '% + Service '.$this->service_cost.'%';

@@ -16,14 +16,26 @@ class Invoice extends Model
         'user_rfid', 'device_serial', 'amount',
         'status', 'charge_duration', 'charge_power',
         'port_number', 'payment_method', 'paid_at',
+        'charge_id', 'auth_type', 'charge_hours',
+        'finished_at', 'started_at',
     ];
 
-    protected $dates = ['paid_at'];
+    protected $dates = ['paid_at', 'finished_at', 'started_at'];
     public $timestamps = true;
+
+    const STATUS_CHARGING = 1;
+    const STATUS_COMPLETED = 2;
+    const STATUS_ERROR = 3;
+
 
     public function device()
     {
         return $this->belongsTo(Device::class, 'device_serial', 'serial_number');
+    }
+
+    public function charge()
+    {
+        return $this->hasOne(Charge::class);
     }
 
     public function user()
@@ -62,12 +74,43 @@ class Invoice extends Model
         return $name;
     }
 
+    public function charge_info()
+    {
+        if (!$this->charge) {
+            return null;
+        }
+
+        return $this->charge->custom_id;
+    }
+
     public function payInvoice()
     {
 //        if (backpack_user()->rfid == $this->user_rfid) {
 //            return view('vendor.backpack.crud.buttons.pay_wallet', ['id' => $this->id]);
 //        }
         return false;
+    }
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->status) {
+            case self::STATUS_CHARGING:
+                return 'Charging';
+            case self::STATUS_COMPLETED:
+                return 'Completed';
+            case self::STATUS_ERROR:
+                return 'Aborted';
+        }
+        return null;
+    }
+
+    public function charge_hours_text()
+    {
+        if (!$this->charge_hours) {
+            return 'Auto';
+        }
+
+        return $this->charge_hours;
     }
 
     public static function countAmount(Device $device, $request)
