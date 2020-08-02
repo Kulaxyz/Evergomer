@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="bot">
+  <component name="PublishConfigData">
     <serverData>
-      <paths name="bot">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
       <paths name="station">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/var/www/html" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/var/www/html/.env" />
+            <excludedPath path="/var/www/html/public/packages" />
+            <excludedPath path="/var/www/html/vendor" />
+            <excludedPath path="/var/www/html/storage" />
+            <excludedPath local="true" path="$PROJECT_DIR$/storage" />
+            <excludedPath local="true" path="$PROJECT_DIR$/vendor" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.env" />
+            <excludedPath local="true" path="$PROJECT_DIR$/public/packages" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

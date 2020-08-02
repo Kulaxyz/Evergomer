@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::post('notify-settings', 'SettingsController@change')->name('notify-settings');
 Auth::routes();
 Route::get('/test', function () {
-    \App\Payment::whereNull('number')->delete();
+    echo 5;
 });
 
 Route::group([

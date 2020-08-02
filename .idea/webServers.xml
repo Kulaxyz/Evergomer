@@ -2,14 +2,6 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="467cadd2-35ff-49ac-bcbe-0c7384153858" name="bot" url="http://194.67.92.19">
-        <fileTransfer host="194.67.92.19" port="22" accessType="SFTP">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
       <webServer id="38f0277c-ea8f-455b-a2ac-38b68449ff74" name="station" url="http://51.161.11.20">
         <fileTransfer host="51.161.11.20" port="22" accessType="SFTP">
           <advancedOptions>
