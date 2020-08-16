@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\FrontendSetting;
+use App\Page;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +26,14 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function mainpage()
+    {
+        $blocks = Page::where('name', 'mainpage')->first()->blocks;
+        $data = json_decode($blocks);
+        $gallery_images = json_decode(FrontendSetting::get('gallery_images'));
+
+        return view('main', compact('data', 'gallery_images'));
     }
 }

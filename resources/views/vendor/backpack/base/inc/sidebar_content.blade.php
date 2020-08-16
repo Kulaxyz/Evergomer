@@ -43,6 +43,16 @@
 @can('view_staff')
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('staff')}}'><i class='nav-icon fa fa-users'></i>Staff</a></li>
 @endcan
+
+<li class="nav-item nav-dropdown">
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-group"></i>Frontend</a>
+    <ul class="nav-dropdown-items">
+        <li class="nav-item"><a class="nav-link" href="{{ route('backpack.page.main') }}"><i class="nav-icon fa fa-group"></i> <span>Main Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('menu-item') }}"><i class="nav-icon fa fa-key"></i> <span>Menu</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('backpack.gallery.edit') }}"><i class="nav-icon fa fa-file-image-o"></i> <span>Gallery</span></a></li>
+    </ul>
+</li>
+
 <!-- Settings -->
 @can('edit_settings')
     <li class="nav-item nav-dropdown">
@@ -68,6 +78,7 @@
                     </ul>
                 </li>
             @endcan
+{{--            @endcan--}}
 
 {{--                Invoice Settings--}}
             <li  style="padding-left: 0.8rem;" class="nav-item nav-dropdown">

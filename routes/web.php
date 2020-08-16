@@ -14,14 +14,10 @@
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@mainpage')->name('mainpage');
+
 Route::post('notify-settings', 'SettingsController@change')->name('notify-settings');
 Auth::routes();
-Route::get('/test', function () {
-    echo 5;
-});
 
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
@@ -58,3 +54,8 @@ Route::group([
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/test', function () {
+   $page = \App\Page::first();
+   $data = json_decode($page->blocks);
+    dd($data);
+});

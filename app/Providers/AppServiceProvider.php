@@ -27,9 +27,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         date_default_timezone_set('America/Toronto');
-        Role::findOrCreate('admin');
-        Role::findOrCreate('user');
-        Role::findOrCreate('owner');
+//        Role::findOrCreate('admin');
+//        Role::findOrCreate('user');
+//        Role::findOrCreate('owner');
         Payment::observe(PaymentObserver::class);
 
     }
