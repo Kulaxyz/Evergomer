@@ -9,6 +9,25 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    public function settings()
+    {
+        $vars = [];
+        foreach (FrontendSetting::GENERAL_SETTINGS as $setting) {
+            $vars[$setting] = FrontendSetting::get($setting);
+        }
+
+        return view('vendor.frontend.settings', $vars);
+    }
+
+    public function editSettings(Request $request)
+    {
+        foreach (FrontendSetting::GENERAL_SETTINGS as $setting) {
+            FrontendSetting::set($setting, $request->input($setting));
+        }
+
+        return redirect()->back();
+    }
+
     public function mainpage()
     {
         $blocks = Page::where('name', 'mainpage')->first()->blocks;

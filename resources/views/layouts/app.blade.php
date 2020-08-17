@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
 <head>
-    <title>Taxi</title>
+    <title>{{ \App\FrontendSetting::get('name', 'Energomer') }}</title>
+    <meta name="description" content="{{ \App\FrontendSetting::get('desc', 'Charging') }}">
     <meta name="viewport" content="width=device-width height=device-height initial-scale=1.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +16,7 @@
 <body>
 <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="/images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
 <div class="preloader">
-    <div class="preloader-logo"><a class="brand" href="/"><img class="brand-logo-dark" src="/images/logo-default-355x118.png" alt="" width="177" height="59"/></a>
+    <div class="preloader-logo"><a class="brand" href="/"><img class="brand-logo-dark" src="{{ \App\FrontendSetting::get('logo', '/images/logo-default-355x118.png') }}" alt="" width="177" height="59"/></a>
     </div>
     <div class="preloader-body">
         <div class="cssload-container">
@@ -26,6 +27,18 @@
 <div class="page">
     <!-- Page Header-->
     <header class="page-header">
+        <!-- Logo -->
+        <div class="rd-navbar-panel">
+            <!-- RD Navbar Brand-->
+            <div class="rd-navbar-brand" id="top-logo">
+                <a class="brand" href="/">
+                    <img class="brand-logo-dark"
+                         src="{{ \App\FrontendSetting::get('logo', '/images/logo-default-355x118.png') }}"
+                         alt="" width="177" height="59"/>
+                </a>
+            </div>
+        </div>
+
         <!-- RD Navbar-->
         <div class="rd-navbar-wrap">
             <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-body-class="rd-navbar-modern-linked" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
@@ -72,14 +85,14 @@
                             <!-- RD Navbar Toggle-->
                             <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                             <!-- RD Navbar Brand-->
-                            <div class="rd-navbar-brand"><a class="brand" href="/"><img class="brand-logo-dark" src="/images/logo-default-355x118.png" alt="" width="177" height="59"/></a>
+                            <div class="rd-navbar-brand"><a class="brand" href="/"><img class="brand-logo-dark" src="{{ \App\FrontendSetting::get('logo', '/images/logo-default-355x118.png') }}" alt="" width="177" height="59"/></a>
                             </div>
                         </div>
                         <div class="rd-navbar-collapse">
                             <button class="rd-navbar-collapse-toggle" data-rd-navbar-toggle=".rd-navbar-collapse-content"><span></span></button>
                             <div class="rd-navbar-collapse-content">
-                                <div class="link-icon-title"><a class="link-icon-1" href="tel:#"><span class="icon mdi mdi-phone"></span><span>1-800-1234-567</span></a></div>
-                                <div class="link-icon-title"><a class="link-icon-1" href="mailto:#"><span class="icon mdi mdi-email-outline"></span><span>info@demolink.org</span></a></div>
+                                <div class="link-icon-title"><a class="link-icon-1" href="tel:{{ \App\FrontendSetting::get('phone') }}"><span class="icon mdi mdi-phone"></span><span>{{ \App\FrontendSetting::get('phone') }}</span></a></div>
+                                <div class="link-icon-title"><a class="link-icon-1" href="mailto:{{\App\FrontendSetting::get('email')}}"><span class="icon mdi mdi-email-outline"></span><span>{{ \App\FrontendSetting::get('email') }}</span></a></div>
                                 @if(!backpack_user())
                                     <div class="link-icon-title"><a class="link-icon-1" href="{{ route('login') }}"><span class="icon mdi mdi-login"></span><span>Login/Register</span></a></div>
                                 @else
@@ -175,7 +188,7 @@
             <div class="container">
                 <div class="layout-2">
                     <!-- Rights-->
-                    <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
+                    <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved.</p>
                     <div>
                         <div class="group group-middle"><a class="link-social-2 icon mdi mdi-facebook" href="#"></a><a class="link-social-2 icon mdi mdi-twitter" href="#"></a><a class="link-social-2 icon mdi mdi-google" href="#"></a><a class="link-social-2 icon mdi mdi-instagram" href="#"></a><a class="link-social-2 icon mdi mdi-linkedin" href="#"></a></div>
                     </div>

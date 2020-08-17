@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class FrontendSetting extends Model
 {
     protected $guarded = ['id'];
+    const GENERAL_SETTINGS = ['name', 'desc', 'email', 'phone', 'logo'];
 
-    public static function get($name)
+    public static function get($name, $default = null)
     {
         $setting = self::where('name', $name)->first();
-        if (!$setting) {
-            return null;
+        if (!$setting || !$setting->value) {
+            return $default;
         }
         return $setting->value;
     }

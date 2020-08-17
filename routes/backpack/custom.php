@@ -23,6 +23,8 @@ Route::group([
     Route::get('gallery/edit', 'PageController@gallery')->name('backpack.gallery.edit');
     Route::post('gallery/edit', 'PageController@gallery_edit')->name('backpack.gallery.edit');
     Route::post('page/edit/{page}', 'PageController@edit')->name('page.edit');
+    Route::get('frontend/settings', 'PageController@settings')->name('frontend.settings');
+    Route::post('frontend/settings', 'PageController@editSettings')->name('frontend.settings');
 
     Route::get('edit-account-info', 'MyAccountController@getAccountInfoForm')->name('backpack.account.info');
     Route::get('sms-settings', 'SmsSettingsCrudController@index')->name('backpack.sms.settings');
@@ -41,7 +43,5 @@ Route::group([
     Route::crud('installed_place', 'InstalledPlaceCrudController');
     Route::crud('purchase_type', 'PurchaseTypeCrudController');
     Route::crud('billing_category', 'BillingCategoryCrudController');
-
-
 
 }); // this should be the absolute last line of this file

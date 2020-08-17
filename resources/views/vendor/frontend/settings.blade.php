@@ -293,27 +293,17 @@
             background-position: center center;
         }
     </style>
-    {{--    <link rel="stylesheet" type="text/css"--}}
-    {{--          href="/packages/bootstrap-iconpicker/icon-fonts/font-awesome-5.12.0-1/css/all.min.css">--}}
-
-    {{--    <link rel="stylesheet" type="text/css"--}}
-    {{--          href="/packages/bootstrap-iconpicker/icon-fonts/font-awesome-5.12.0-1/css/all.min.css">--}}
-    <!-- Bootstrap-Iconpicker -->
-    {{--    <link rel="stylesheet" href="/packages/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"/>--}}
 
 @endsection
 
 @section('header')
     <section class="container-fluid">
         <h2>
-            <span class="text-capitalize">Gallery Images</span>
+            <span class="text-capitalize">General Frontend Settings</span>
             <small>Edit</small>
         </h2>
     </section>
 @endsection
-
-
-
 
 @section('after_styles')
     <!-- DATA TABLES -->
@@ -334,55 +324,51 @@
 
 @section('content')
     <div class="container">
-        <form method="post"  action="{{ route('backpack.gallery.edit') }}">
+        <form method="post"  action="{{ route('frontend.settings') }}">
             @csrf
             <div class="bg-white p-3 row pl-3 pr-3">
-                <div class="container-repeatable-elements">
-                    @if(!is_null($images))
-                    @forelse($images as $image)
-                        <div class="col-md-12 well repeatable-element row m-1 p-2">
-                            <button onclick="remove_repeatable_parent(this)" type="button" class="close delete-element"><span aria-hidden="true">×</span></button>
-                            <div class="form-group col-sm-12 cropperImage" data-aspectratio="1" data-crop="1"
-                                 data-field-name="image" data-initialized="true">
-                                <label>Gallery Image</label>
-                                <div><img style="max-height: 300px" class="preview_img" src="{{ $image }}" alt=""></div>
-                                <div class="btn-group">
-                                    <div class="btn mt-2 btn-light btn-sm btn-file">
-                                        <input type="hidden" class="preview_img" name="gallery_img[]" value="{{ $image }}">
-                                        Choose file
-                                        <input type="file" accept="image/*" data-preview="img-preview-1"
-                                               data-handle="uploadImage" onchange="previewImg(this)"
-                                               class="hide">
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-md-12 well repeatable-element row m-1 p-2">
-                            <button onclick="remove_repeatable_parent(this)" type="button" class="close delete-element"><span aria-hidden="true">×</span></button>
-                            <div class="form-group col-sm-12 cropperImage" data-aspectratio="1" data-crop="1"
-                                 data-field-name="image" data-initialized="true">
-                                <label>Gallery Image</label>
-                                <div><img style="max-height: 300px" class="preview_img" src="" alt=""></div>
-                                <div class="btn-group">
-                                    <div class="btn mt-2 btn-light btn-sm btn-file">
-                                        <input type="hidden" class="preview_img" name="gallery_img[]" value="">
-                                        Choose file
-                                        <input type="file" accept="image/*" data-preview="img-preview-1"
-                                               data-handle="uploadImage" onchange="previewImg(this)"
-                                               class="hide">
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                    @endforelse
-                    @endif
+                <div class="form-group col-sm-12">
+                    <label>
+                        Site Name
+                    </label>
+                    <input type="text" name="name" value="{{ $name ?? null }}" class="form-control">
                 </div>
-                <button type="button" onclick="add_gallery_item(this)" class="btn btn-outline-primary btn-sm ml-1 add-repeatable-element-button">+ New Item</button>
+                <div class="form-group col-sm-12">
+                    <label>
+                        Site Description
+                    </label>
+                    <input type="text" name="desc" value="{{ $desc ?? null }}" class="form-control">
+                </div>
+                <div class="form-group col-sm-12">
+                    <label>
+                        Contact Email
+                    </label>
+                    <input type="text" name="email" value="{{ $email ?? null }}" class="form-control">
+                </div>
+                <div class="form-group col-sm-12">
+                    <label>
+                        Contact Phone
+                    </label>
+                    <input type="text" name="phone" value="{{ $phone ?? null }}" class="form-control">
+                </div>
+
+                <div class="form-group col-sm-12 cropperImage" data-aspectratio="1" data-crop="1"
+                     data-field-name="image" data-initialized="true">
+                    <label>Site Logo</label>
+                    <div><img style="max-height: 59px; max-width: 177px" class="preview_img" src="{{ $logo ?? null }}" alt=""></div>
+                    <div class="btn-group">
+                        <div class="btn mt-2 btn-light btn-sm btn-file">
+                            <input type="hidden" class="preview_img" name="logo" value="{{ $logo ?? null }}">
+                            Choose file
+                            <input type="file" accept="image/*" data-preview="img-preview-1"
+                                   data-handle="uploadImage" onchange="previewImg(this)"
+                                   class="hide">
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
             <div class="btn-group" role="group">
@@ -406,38 +392,5 @@
             console.log(preview);
             readURL(inp[0], preview[0], true);
         };
-    </script>
-
-    <script>
-        let gallery_item = '<div class="col-md-12 well repeatable-element row m-1 p-2">\n' +
-            '                            <button onclick="remove_repeatable_parent(this)" type="button" class="close delete-element"><span aria-hidden="true">×</span></button>\n' +
-            '                            <div class="form-group col-sm-12 cropperImage" data-aspectratio="1" data-crop="1"\n' +
-            '                                 data-field-name="image" data-initialized="true">\n' +
-            '                                <label>Gallery Image</label>\n' +
-            '                                <div><img style="max-height: 300px" class="preview_img" src="" alt=""></div>\n' +
-            '                                <div class="btn-group">\n' +
-            '                                    <div class="btn mt-2 btn-light btn-sm btn-file">\n' +
-            '                                        <input type="hidden" class="preview_img" name="gallery_img[]" value="">\n' +
-            '                                        Choose file\n' +
-            '                                        <input type="file" accept="image/*" data-preview="img-preview-1"\n' +
-            '                                               data-handle="uploadImage" onchange="previewImg(this)"\n' +
-            '                                               class="hide">\n' +
-            '                                    </div>\n' +
-            '\n' +
-            '                                </div>\n' +
-            '\n' +
-            '\n' +
-            '                            </div>\n' +
-            '                        </div>';
-
-        let add_gallery_item = function (el) {
-            console.log(el);
-            cont = $(el).siblings('.container-repeatable-elements');
-            cont.append(gallery_item);
-        };
-
-        let remove_repeatable_parent = function (el) {
-            $(el).parent().remove();
-        }
     </script>
 @endsection
