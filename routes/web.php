@@ -55,7 +55,5 @@ Route::group([
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/test', function () {
-   $page = \App\Page::first();
-   $data = json_decode($page->blocks);
-    dd($data);
+   dd(\App\Invoice::where('status', \App\Invoice::STATUS_COMPLETED)->get());
 });

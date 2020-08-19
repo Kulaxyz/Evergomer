@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Charge;
 use App\Device;
+use App\Http\Requests\InvoiceRequest as UpdateRequest;
 use App\Invoice;
 use App\Models\BackpackUser;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\InvoiceRequest as StoreRequest;
-use App\Http\Requests\InvoiceRequest as UpdateRequest;
 use Carbon\Carbon;
 
 
@@ -69,7 +69,7 @@ class InvoiceCrudController extends CrudController
                 'label' => "Device", // Table column heading
                 'type' => "model_function",
                 'function_name' => 'deviceLink', // the method in your Model
-                 'limit' => 1000, // Limit the number of characters shown
+                'limit' => 1000, // Limit the number of characters shown
             ],
             [
                 // run a function on the CRUD model and show its return value
@@ -77,7 +77,7 @@ class InvoiceCrudController extends CrudController
                 'label' => "User", // Table column heading
                 'type' => "model_function",
                 'function_name' => 'userLink', // the method in your Model
-                 'limit' => 1000, // Limit the number of characters shown
+                'limit' => 1000, // Limit the number of characters shown
             ],
 //            [
 //                // run a function on the CRUD model and show its return value
@@ -107,8 +107,8 @@ class InvoiceCrudController extends CrudController
             [
                 'name' => 'status',
                 'label' => 'Status',
-                'type' => 'boolean',
-                'options' => [1 => 'Charging', 2 => 'Completed']
+                'type' => 'model_function',
+                'function_name' => 'getStatusTextAttribute',
             ],
 //            [
 //                'name' => 'started_at',

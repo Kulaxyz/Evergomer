@@ -43,8 +43,8 @@
                         <!-- Counter Modern-->
                         <article class="counter-modern">
                             <div class="icon counter-modern-icon mdi mdi-car"></div>
-                            <div class="counter-modern-main"><span>250</span><span></span></div>
-                            <h4 class="font-weight-regular counter-modern-title">Fleet Vehicles</h4>
+                            <div class="counter-modern-main"><span>{{ \App\Device::count() }}</span><span></span></div>
+                            <h4 class="font-weight-regular counter-modern-title">Device Installed</h4>
                         </article>
                     </div>
                     <div class="col-6 col-md-3 wow fadeIn" data-wow-delay=".2s">
@@ -52,9 +52,11 @@
                         <article class="counter-modern">
                             <div class="icon counter-modern-icon mdi mdi-account"></div>
                             <div class="counter-modern-main">
-                                <div class="counter">17</div>
+                                <div class="counter">
+                                    {{ \App\Invoice::where('status', \App\Invoice::STATUS_COMPLETED)->sum('charge_duration') }}
+                                </div>
                             </div>
-                            <h4 class="font-weight-regular counter-modern-title">Drivers</h4>
+                            <h4 class="font-weight-regular counter-modern-title">Hours</h4>
                         </article>
                     </div>
                     <div class="col-6 col-md-3 wow fadeIn" data-wow-delay=".2s">
@@ -62,9 +64,11 @@
                         <article class="counter-modern">
                             <div class="icon counter-modern-icon mdi mdi-coin"></div>
                             <div class="counter-modern-main">
-                                <div class="counter">231</div>
+                                <div class="counter">
+                                    {{ \App\Invoice::where('status', \App\Invoice::STATUS_COMPLETED)->sum('charge_power') }}
+                                </div>
                             </div>
-                            <h4 class="font-weight-regular counter-modern-title">Great Offers</h4>
+                            <h4 class="font-weight-regular counter-modern-title">Total kWh</h4>
                         </article>
                     </div>
                     <div class="col-6 col-md-3 wow fadeIn" data-wow-delay=".2s">
@@ -72,9 +76,9 @@
                         <article class="counter-modern">
                             <div class="icon counter-modern-icon mdi mdi-flag-variant"></div>
                             <div class="counter-modern-main">
-                                <div class="counter">24</div><span>K</span>
+                                <div class="counter">10</div>
                             </div>
-                            <h4 class="font-weight-regular counter-modern-title">Annual Customers</h4>
+                            <h4 class="font-weight-regular counter-modern-title">Locations</h4>
                         </article>
                     </div>
                 </div>

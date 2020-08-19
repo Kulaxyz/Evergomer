@@ -14,9 +14,9 @@ class UpdateInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-//            $table->string('auth_type')->nullable();
-//            $table->bigInteger('charge_id')->unsigned()->nullable();
-//            $table->double('charge_hours')->nullable();
+            $table->string('auth_type')->nullable();
+            $table->bigInteger('charge_id')->unsigned()->nullable();
+            $table->double('charge_hours')->nullable();
             $table->timestamp('finished_at')->nullable();
             $table->timestamp('started_at')->nullable();
         });

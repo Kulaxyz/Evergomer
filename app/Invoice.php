@@ -91,7 +91,7 @@ class Invoice extends Model
         return false;
     }
 
-    public function getStatusTextAttribute()
+    public function getStatusTextAttribute($val = null)
     {
         switch ($this->status) {
             case self::STATUS_CHARGING:
