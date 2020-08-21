@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FrontendSetting extends Model
 {
     protected $guarded = ['id'];
-    const GENERAL_SETTINGS = ['name', 'desc', 'email', 'phone', 'logo'];
+    const GENERAL_SETTINGS = ['name', 'desc', 'email', 'phone', 'logo', 'loader_logo'];
 
     public static function get($name, $default = null)
     {

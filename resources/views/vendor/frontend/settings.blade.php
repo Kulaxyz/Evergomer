@@ -368,6 +368,21 @@
 
                     </div>
                 </div>
+                <div class="form-group col-sm-12 cropperImage" data-aspectratio="1" data-crop="1"
+                     data-field-name="image" data-initialized="true">
+                    <label>Preloader Logo</label>
+                    <div><img style="max-height: 59px; max-width: 177px" class="preview_img" src="{{ $loader_logo ?? null }}" alt=""></div>
+                    <div class="btn-group">
+                        <div class="btn mt-2 btn-light btn-sm btn-file">
+                            <input type="hidden" class="preview_img" name="loader_logo" value="{{ $loader_logo ?? null }}">
+                            Choose file
+                            <input type="file" accept="image/*" data-preview="img-preview-1"
+                                   data-handle="uploadImage" onchange="previewImg(this)"
+                                   class="hide">
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
 

@@ -14,8 +14,6 @@ class Page extends Model
     const CAROUSELS = ['top', 'testim', 'adv'];
     const TOP_AND_MOB_FIELDS = ['title', 'href', 'subtitle', 'text', 'btn', 'img'];
     const TESTIM_FIELDS = ['name', 'status','text', 'img'];
-    const MOBILE_APP_FIELDS = [''];
-
 
     protected $casts = [
         'blocks' => 'array',
